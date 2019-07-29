@@ -16,4 +16,11 @@
         from merchants
         where name = #{name}
     </select>
+
+    <!-- 根据 id 查询商户信息 -->
+    <select id="findById" resultType="top.aprilyolies.merchant.pojo.MerchantInfo" parameterType="int">
+        select id, name, logo_url as logoUrl, business_license_url as businessLicenseUrl, phone, address
+        from merchants
+        where id = #{id}
+    </select>
 </mapper>

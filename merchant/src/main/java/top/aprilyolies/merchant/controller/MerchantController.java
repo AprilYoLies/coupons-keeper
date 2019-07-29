@@ -22,10 +22,29 @@ public class MerchantController {
         this.merchantService = merchantService;
     }
 
+    /**
+     * 创建商户信息
+     *
+     * @param merchantInfo 商户信息
+     * @return 操作的结果
+     */
     @ResponseBody
     @PostMapping("/create")
     public Response createMerchants(@RequestBody MerchantInfo merchantInfo) {
         log.info("CreateMerchants: {}", JSON.toJSONString(merchantInfo));
         return merchantService.createMerchants(merchantInfo);
+    }
+
+    /**
+     * 获取商户信息
+     *
+     * @param id 商户信息
+     * @return 操作结果，数据为商户信息
+     */
+    @ResponseBody
+    @GetMapping("/{id}")
+    public Response queryMerchantsInfo(@PathVariable Integer id) {
+        log.info("BuildMerchantsInfo: {}", id);
+        return merchantService.queryMerchantsInfo(id);
     }
 }

@@ -41,4 +41,18 @@ public class MerchantServiceImpl implements IMerchantService {
         }
         return response;
     }
+
+    /**
+     * 根据商户 id 获取商户信息
+     *
+     * @param id 商户 id
+     * @return 商户信息
+     */
+    @Override
+    public Response queryMerchantsInfo(Integer id) {
+        Response response = Response.buildResponse(StatusCode.SUCCESS);
+        MerchantInfo merchantInfo = merchantMapper.findById(id);
+        response.setData(merchantInfo);
+        return response;
+    }
 }

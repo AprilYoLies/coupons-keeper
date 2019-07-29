@@ -29,4 +29,12 @@ public interface MerchantMapper {
      * @return 商户信息
      */
     MerchantInfo findByName(String name);
+
+    /**
+     * 根据商户 id 查找商户细信息
+     *
+     * @param id 商户名
+     * @return 商户信息
+     */
+    MerchantInfo findById(Integer id);
 }

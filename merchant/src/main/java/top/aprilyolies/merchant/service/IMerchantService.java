@@ -15,4 +15,7 @@ import top.aprilyolies.merchant.pojo.Response;
 public interface IMerchantService {
     // 创建商户信息
     Response createMerchants(MerchantInfo merchantInfo);
+
+    // 根据 id 查询商户信息
+    Response queryMerchantsInfo(Integer id);
 }
