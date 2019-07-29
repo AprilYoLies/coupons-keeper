@@ -11,7 +11,8 @@ import top.aprilyolies.merchant.pojo.MerchantInfo;
 import top.aprilyolies.merchant.pojo.Response;
 import top.aprilyolies.merchant.service.IMerchantService;
 
-import static top.aprilyolies.merchant.constants.MerchantConstants.COUPON_TOPIC;
+import static top.aprilyolies.merchant.constants.MerchantConstants.COUPONS_TOPIC;
+
 
 /**
  * @Author EvaJohnson
@@ -24,7 +25,7 @@ public class MerchantServiceImpl implements IMerchantService {
 
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    public MerchantServiceImpl(MerchantMapper merchantMapper, KafkaTemplate kafkaTemplate) {
+    public MerchantServiceImpl(MerchantMapper merchantMapper, KafkaTemplate<String, String> kafkaTemplate) {
         this.merchantMapper = merchantMapper;
         this.kafkaTemplate = kafkaTemplate;
     }
@@ -81,7 +82,7 @@ public class MerchantServiceImpl implements IMerchantService {
         Response response = Response.buildResponse(code);
         if (code == StatusCode.SUCCESS) {
             String couponStr = JSON.toJSONString(coupon);
-            kafkaTemplate.send(COUPON_TOPIC, couponStr);
+            kafkaTemplate.send(COUPONS_TOPIC, couponStr);
         }
         return response;
     }
