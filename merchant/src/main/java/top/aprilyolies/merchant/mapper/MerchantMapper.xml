@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.aprilyolies.merchant.mapper.MerchantMapper">
+    <!-- 向数据库写入商户信息 -->
+    <insert id="createMerchants" useGeneratedKeys="true" keyProperty="id"
+            parameterType="top.aprilyolies.merchant.pojo.MerchantInfo">
+        insert into merchants(name, logo_url, business_license_url, phone, address, is_audit)
+        values (#{name}, #{logoUrl}, #{businessLicenseUrl}, #{phone}, #{address}, #{idAudit})
+    </insert>
+
+    <!-- 根据 name 查询商户信息 -->
+    <select id="findByName" resultType="top.aprilyolies.merchant.pojo.MerchantInfo" parameterType="string">
+        select id, name, logo_url as logoUrl, business_license_url as businessLicenseUrl, phone, address
+        from merchants
+        where name = #{name}
+    </select>
+</mapper>
