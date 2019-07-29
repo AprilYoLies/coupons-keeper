@@ -1,12 +1,17 @@
 package top.aprilyolies.merchant.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import top.aprilyolies.merchant.constants.StatusCode;
 import top.aprilyolies.merchant.mapper.MerchantMapper;
-import top.aprilyolies.merchant.pojo.MerchantIdHolder;
+import top.aprilyolies.merchant.pojo.Coupon;
+import top.aprilyolies.merchant.pojo.IdHolder;
 import top.aprilyolies.merchant.pojo.MerchantInfo;
 import top.aprilyolies.merchant.pojo.Response;
 import top.aprilyolies.merchant.service.IMerchantService;
+
+import static top.aprilyolies.merchant.constants.MerchantConstants.COUPON_TOPIC;
 
 /**
  * @Author EvaJohnson
@@ -17,8 +22,11 @@ import top.aprilyolies.merchant.service.IMerchantService;
 public class MerchantServiceImpl implements IMerchantService {
     private MerchantMapper merchantMapper;
 
-    public MerchantServiceImpl(MerchantMapper merchantMapper) {
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+    public MerchantServiceImpl(MerchantMapper merchantMapper, KafkaTemplate kafkaTemplate) {
         this.merchantMapper = merchantMapper;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     /**
@@ -34,10 +42,10 @@ public class MerchantServiceImpl implements IMerchantService {
         response.setCode(code.getCode());
         response.setMsg(code.getMsg());
         if (code != StatusCode.SUCCESS) {
-            response.setData(new MerchantIdHolder(-1));
+            response.setData(new IdHolder(-1));
         } else {
             merchantMapper.createMerchants(merchantInfo);
-            response.setData(new MerchantIdHolder(merchantInfo.getId()));
+            response.setData(new IdHolder(merchantInfo.getId()));
         }
         return response;
     }
@@ -50,9 +58,31 @@ public class MerchantServiceImpl implements IMerchantService {
      */
     @Override
     public Response queryMerchantsInfo(Integer id) {
-        Response response = Response.buildResponse(StatusCode.SUCCESS);
+        Response response;
         MerchantInfo merchantInfo = merchantMapper.findById(id);
+        if (merchantInfo == null) {
+            response = Response.buildResponse(StatusCode.MERCHANTS_NOT_EXIST);
+        } else {
+            response = Response.buildResponse(StatusCode.SUCCESS);
+        }
         response.setData(merchantInfo);
+        return response;
+    }
+
+    /**
+     * 商户投放优惠券
+     *
+     * @param coupon 优惠券信息
+     * @return 投放结果
+     */
+    @Override
+    public Response dropCoupon(Coupon coupon) {
+        StatusCode code = coupon.validate(merchantMapper);
+        Response response = Response.buildResponse(code);
+        if (code == StatusCode.SUCCESS) {
+            String couponStr = JSON.toJSONString(coupon);
+            kafkaTemplate.send(COUPON_TOPIC, couponStr);
+        }
         return response;
     }
 }

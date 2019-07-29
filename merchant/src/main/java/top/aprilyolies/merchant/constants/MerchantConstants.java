@@ -9,4 +9,6 @@ public class MerchantConstants {
     public static final String TOKEN_STR = "token";
 
     public static final String MERCHANT_TOKEN = "coupons_keeper_merchant_token";
+
+    public static final String COUPON_TOPIC = "coupon_topic";
 }

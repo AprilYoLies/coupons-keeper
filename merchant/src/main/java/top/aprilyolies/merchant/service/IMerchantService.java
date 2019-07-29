@@ -1,5 +1,6 @@
 package top.aprilyolies.merchant.service;
 
+import top.aprilyolies.merchant.pojo.Coupon;
 import top.aprilyolies.merchant.pojo.MerchantInfo;
 import top.aprilyolies.merchant.pojo.Response;
 
@@ -18,4 +19,7 @@ public interface IMerchantService {
 
     // 根据 id 查询商户信息
     Response queryMerchantsInfo(Integer id);
+
+    // 商户投放优惠券
+    Response dropCoupon(Coupon coupon);
 }

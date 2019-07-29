@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MerchantIdHolder {
+public class IdHolder {
     private int id = -1;
 }

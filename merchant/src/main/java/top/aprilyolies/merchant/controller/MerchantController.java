@@ -3,6 +3,7 @@ package top.aprilyolies.merchant.controller;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import top.aprilyolies.merchant.pojo.Coupon;
 import top.aprilyolies.merchant.pojo.MerchantInfo;
 import top.aprilyolies.merchant.pojo.Response;
 import top.aprilyolies.merchant.service.IMerchantService;
@@ -46,5 +47,18 @@ public class MerchantController {
     public Response queryMerchantsInfo(@PathVariable Integer id) {
         log.info("BuildMerchantsInfo: {}", id);
         return merchantService.queryMerchantsInfo(id);
+    }
+
+    /**
+     * 商户投放优惠券
+     *
+     * @param coupon 优惠券信息
+     * @return 投放结果
+     */
+    @ResponseBody
+    @PostMapping("/drop")
+    public Response dropCoupon(@RequestBody Coupon coupon) {
+        log.info("DropPassTemplate: {}", JSON.toJSONString(coupon));
+        return merchantService.dropCoupon(coupon);
     }
 }
