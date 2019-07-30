@@ -8,4 +8,9 @@
             parameterType="top.aprilyolies.coupons.pojo.User">
         insert into users(name, age, sex, phone, address) values (#{name}, #{age}, #{sex}, #{phone}, #{address})
     </insert>
+
+    <!-- 根据 id 查找用户信息 -->
+    <select id="findById" parameterType="int" resultType="top.aprilyolies.coupons.pojo.User">
+        select id, name, age, sex, phone, address from users where id = #{userId}
+    </select>
 </mapper>

@@ -3,17 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="top.aprilyolies.coupons.mapper.CouponsMapper">
-    <!-- 向数据库写入商户信息 -->
+    <!-- 向数据库写入优惠券信息 -->
     <insert id="saveCoupon" useGeneratedKeys="true" keyProperty="id"
             parameterType="top.aprilyolies.coupons.pojo.Coupon">
         insert into coupons(merchant_id, title, summary, `desc`, `limit`, has_token, background, start, end)
         values (#{merchantId}, #{title}, #{summary}, #{desc}, #{limit}, #{hasToken}, #{background}, #{start}, #{end})
     </insert>
 
-    <!-- 根据 name 查询商户信息 -->
-    <!--    <select id="findByName" resultType="top.aprilyolies.merchant.pojo.MerchantInfo" parameterType="string">-->
-    <!--        select id, name, logo_url as logoUrl, business_license_url as businessLicenseUrl, phone, address-->
-    <!--        from merchants-->
-    <!--        where name = #{name}-->
-    <!--    </select>-->
+    <!-- 根据 id 查询优惠券信息 -->
+    <select id="findById" resultType="top.aprilyolies.coupons.pojo.Coupon" parameterType="int">
+        select id, merchant_id as merchantId, title, summary, `desc`, `limit`, has_token as hasToken, background,
+        start, end from coupons where id = #{couponId}
+    </select>
+
+    <update id="updateCoupon" parameterType="top.aprilyolies.coupons.pojo.Coupon">
+        update coupons set
+        merchant_id = #{merchantId},
+        title = #{title},
+        summary = #{summary},
+        `desc` = #{desc},
+        `limit` = #{limit},
+        has_token = #{hasToken},
+        background = #{background},
+        start = #{start},
+        end = #{end}
+        where id = #{id}
+    </update>
 </mapper>

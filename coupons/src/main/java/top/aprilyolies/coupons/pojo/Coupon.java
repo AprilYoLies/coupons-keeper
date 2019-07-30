@@ -15,6 +15,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Coupon {
+    // 优惠券 id
+    private Integer id;
     // 商户 id
     private Integer merchantId;
     // 优惠券标题

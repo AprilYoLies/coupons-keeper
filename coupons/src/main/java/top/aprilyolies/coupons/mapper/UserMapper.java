@@ -21,4 +21,12 @@ public interface UserMapper {
      * @return 创建 user 的结果
      */
     int createUser(User user);
+
+    /**
+     * 根据 id 查找用户
+     *
+     * @param id 用户 id
+     * @return 用户实例
+     */
+    User findById(int id);
 }

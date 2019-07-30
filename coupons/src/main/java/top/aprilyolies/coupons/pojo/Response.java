@@ -25,6 +25,11 @@ public class Response {
     // 响应数据
     private Object data;
 
+    public Response setData(Object data) {
+        this.data = data;
+        return this;
+    }
+
     public Response(int code, String msg) {
         this.code = code;
         this.msg = msg;

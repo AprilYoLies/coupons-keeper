@@ -10,7 +10,7 @@ package top.aprilyolies.merchant.constants;
  * 状态码枚举类
  */
 public enum StatusCode {
-    SUCCESS(0, "成功！"),
+    SUCCESS(0, "成功"),
     DUPLICATE_NAME(1, "商户名称重复"),
     EMPTY_LOGO(2, "商户 logo 为空"),
     EMPTY_BUSINESS_LICENSE(3, "商户营业执照为空"),
