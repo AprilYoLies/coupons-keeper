@@ -81,6 +81,15 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
         return Response.buildResponse(StatusCode.SUCCESS).setData(userCoupons);
     }
 
+    @Override
+    public Response queryUsedCoupons(int userId) {
+        List<UserCoupon> usedCoupons = userCouponsMapper.findUsedByUserId(userId);
+        if (usedCoupons == null || usedCoupons.size() == 0) {
+            return Response.buildResponse(StatusCode.EMPTY_USED_COUPONS).setData(-1);
+        }
+        return Response.buildResponse(StatusCode.SUCCESS).setData(usedCoupons);
+    }
+
     /**
      * 更新优惠券的库存信息
      *

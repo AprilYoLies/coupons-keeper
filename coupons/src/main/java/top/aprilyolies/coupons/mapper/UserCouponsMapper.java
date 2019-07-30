@@ -31,4 +31,12 @@ public interface UserCouponsMapper {
      * @return 查询的用户优惠券结果
      */
     List<UserCoupon> findAllByUserId(int userId);
+
+    /**
+     * 根据用户 id 获取该用户使用过的全部优惠券
+     *
+     * @param userId 用户 id
+     * @return 查询的用户使用过的优惠券结果
+     */
+    List<UserCoupon> findUsedByUserId(int userId);
 }

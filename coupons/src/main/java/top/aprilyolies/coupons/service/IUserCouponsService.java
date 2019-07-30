@@ -28,4 +28,12 @@ public interface IUserCouponsService {
      * @return 查询的用户优惠券结果
      */
     Response queryUserCoupons(int userId);
+
+    /**
+     * 根据用户 id 获取该用户已使用的优惠券
+     *
+     * @param userId 用户 id
+     * @return 查询的用户优惠券结果
+     */
+    Response queryUsedCoupons(int userId);
 }

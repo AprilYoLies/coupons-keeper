@@ -15,4 +15,10 @@
         select id, user_id as userId, coupon_id as couponId, token, assign_date as assignDate, consume_date as consumeDate
         from user_coupons where user_id = #{userId}
     </select>
+
+    <!-- 根据用户 id 查询该用户使用过的全部优惠券信息 -->
+    <select id="findUsedByUserId" parameterType="int" resultType="top.aprilyolies.coupons.pojo.UserCoupon">
+        select id, user_id as userId, coupon_id as couponId, token, assign_date as assignDate, consume_date as consumeDate
+        from user_coupons where user_id = #{userId} and consume_date is not null
+    </select>
 </mapper>

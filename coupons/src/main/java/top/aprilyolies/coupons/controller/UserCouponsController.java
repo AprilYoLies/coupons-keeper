@@ -35,9 +35,29 @@ public class UserCouponsController {
         return userCouponsService.gainCouponForUser(userId, couponId);
     }
 
+    /**
+     * 根据用户 id 获取该用户领取的全部优惠券
+     *
+     * @param userId 用户 id
+     * @return 查询的用户优惠券结果
+     */
     @RequestMapping("/user-coupons/{userId}")
     public Response queryUserCoupons(@PathVariable int userId) {
         log.info("QueryUserCoupons: userId {}", userId);
         return userCouponsService.queryUserCoupons(userId);
     }
+
+    /**
+     * 根据用户 id 获取该用户已使用的优惠券
+     *
+     * @param userId 用户 id
+     * @return 查询的用户优惠券结果
+     */
+    @RequestMapping("/used-coupons/{userId}")
+    public Response queryUsedCoupons(@PathVariable int userId) {
+        log.info("QueryUsedCoupons: userId {}", userId);
+        return userCouponsService.queryUsedCoupons(userId);
+    }
+
+
 }
