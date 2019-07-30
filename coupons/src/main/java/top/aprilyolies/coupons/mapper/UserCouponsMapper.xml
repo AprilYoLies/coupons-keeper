@@ -9,4 +9,10 @@
         insert into user_coupons(user_id, coupon_id, token, assign_date, consume_date)
         values (#{userId}, #{couponId}, #{token}, #{assignDate}, #{consumeDate})
     </insert>
+
+    <!-- 根据用户 id 查询该用户领取的全部优惠券信息 -->
+    <select id="findAllByUserId" parameterType="int" resultType="top.aprilyolies.coupons.pojo.UserCoupon">
+        select id, user_id as userId, coupon_id as couponId, token, assign_date as assignDate, consume_date as consumeDate
+        from user_coupons where user_id = #{userId}
+    </select>
 </mapper>

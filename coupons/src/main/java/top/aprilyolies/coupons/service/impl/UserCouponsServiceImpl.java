@@ -9,6 +9,7 @@ import top.aprilyolies.coupons.pojo.*;
 import top.aprilyolies.coupons.service.IUserCouponsService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author EvaJohnson
@@ -63,6 +64,21 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
             return Response.buildResponse(StatusCode.SAVE_USER_COUPONS_FAILED).setData(-1);
         }
         return Response.buildResponse(StatusCode.SUCCESS).setData(userCoupon);
+    }
+
+    /**
+     * 根据用户 id 获取该用户领取的全部优惠券
+     *
+     * @param userId 用户 id
+     * @return 查询的用户优惠券结果
+     */
+    @Override
+    public Response queryUserCoupons(int userId) {
+        List<UserCoupon> userCoupons = userCouponsMapper.findAllByUserId(userId);
+        if (userCoupons == null || userCoupons.size() == 0) {
+            return Response.buildResponse(StatusCode.EMPTY_USER_COUPONS).setData(-1);
+        }
+        return Response.buildResponse(StatusCode.SUCCESS).setData(userCoupons);
     }
 
     /**

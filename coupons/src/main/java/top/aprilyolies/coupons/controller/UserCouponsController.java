@@ -34,4 +34,10 @@ public class UserCouponsController {
         log.info("GainCouponForUser: userId {} couponId {}", userId, couponId);
         return userCouponsService.gainCouponForUser(userId, couponId);
     }
+
+    @RequestMapping("/user-coupons/{userId}")
+    public Response queryUserCoupons(@PathVariable int userId) {
+        log.info("QueryUserCoupons: userId {}", userId);
+        return userCouponsService.queryUserCoupons(userId);
+    }
 }

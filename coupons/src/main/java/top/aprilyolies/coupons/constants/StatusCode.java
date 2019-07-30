@@ -13,7 +13,8 @@ public enum StatusCode {
     COUPON_NOT_EXIST(4, "优惠券不存在"),
     COUPON_STOCK_EMPTY(5, "优惠券库存不够"),
     UPDATE_COUPON_STOCK_FAILED(6, "更新优惠券库存失败"),
-    SAVE_USER_COUPONS_FAILED(7, "保存用户优惠券失败");
+    SAVE_USER_COUPONS_FAILED(7, "保存用户优惠券失败"),
+    EMPTY_USER_COUPONS(8, "用户领取的优惠券为空");
     // 状态码
     private int code;
     // 状态信息
