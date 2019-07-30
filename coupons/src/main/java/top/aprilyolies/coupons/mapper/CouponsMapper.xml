@@ -6,7 +6,8 @@
     <!-- 向数据库写入商户信息 -->
     <insert id="saveCoupon" useGeneratedKeys="true" keyProperty="id"
             parameterType="top.aprilyolies.coupons.pojo.Coupon">
-        insert into coupons(merchant_id, title, summary, `desc`, `limit`, has_token, background, start, end) values (#{merchantId}, #{title}, #{summary}, #{desc}, #{limit}, #{hasToken}, #{background}, #{start}, #{end})
+        insert into coupons(merchant_id, title, summary, `desc`, `limit`, has_token, background, start, end)
+        values (#{merchantId}, #{title}, #{summary}, #{desc}, #{limit}, #{hasToken}, #{background}, #{start}, #{end})
     </insert>
 
     <!-- 根据 name 查询商户信息 -->
