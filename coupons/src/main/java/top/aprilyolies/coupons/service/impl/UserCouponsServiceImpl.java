@@ -81,6 +81,12 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
         return Response.buildResponse(StatusCode.SUCCESS).setData(userCoupons);
     }
 
+    /**
+     * 根据用户 id 获取该用户已使用的优惠券
+     *
+     * @param userId 用户 id
+     * @return 查询的用户优惠券结果
+     */
     @Override
     public Response queryUsedCoupons(int userId) {
         List<UserCoupon> usedCoupons = userCouponsMapper.findUsedByUserId(userId);
@@ -88,6 +94,29 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
             return Response.buildResponse(StatusCode.EMPTY_USED_COUPONS).setData(-1);
         }
         return Response.buildResponse(StatusCode.SUCCESS).setData(usedCoupons);
+    }
+
+    /**
+     * 使用用户指定的优惠券
+     *
+     * @param userCouponId 用户优惠券 id
+     * @return 使用的结果
+     */
+    @Override
+    public Response useCoupon(int userCouponId) {
+        UserCoupon userCoupon = userCouponsMapper.findById(userCouponId);
+        if (userCoupon == null) {
+            return Response.buildResponse(StatusCode.COUPON_NOT_EXIST).setData(userCouponId);
+        }
+        if (userCoupon.getConsumeDate() != null) {
+            return Response.buildResponse(StatusCode.COUPON_HAS_USED).setData(userCouponId);
+        }
+        userCoupon.setConsumeDate(new Date());
+        int n = userCouponsMapper.updateUserCoupon(userCoupon);
+        if (n < 1) {
+            return Response.buildResponse(StatusCode.UPDATE_USER_COUPON_FAILED).setData(userCouponId);
+        }
+        return Response.buildResponse(StatusCode.UPDATE_USER_COUPON_FAILED).setData(userCoupon);
     }
 
     /**

@@ -21,4 +21,16 @@
         select id, user_id as userId, coupon_id as couponId, token, assign_date as assignDate, consume_date as consumeDate
         from user_coupons where user_id = #{userId} and consume_date is not null
     </select>
+
+    <!-- 根据 id 查询优惠券信息 -->
+    <select id="findById" parameterType="int" resultType="top.aprilyolies.coupons.pojo.UserCoupon">
+        select id, user_id as userId, coupon_id as couponId, token, assign_date as assignDate, consume_date as consumeDate
+        from user_coupons where id = #{userCouponId}
+    </select>
+
+    <!-- 更新用户优惠券信息 -->
+    <update id="updateUserCoupon" parameterType="top.aprilyolies.coupons.pojo.UserCoupon">
+        update user_coupons set user_id = #{userId}, coupon_id = #{couponId}, token = #{token}, assign_date = #{assignDate},
+         consume_date = #{consumeDate} where id = #{id}
+    </update>
 </mapper>

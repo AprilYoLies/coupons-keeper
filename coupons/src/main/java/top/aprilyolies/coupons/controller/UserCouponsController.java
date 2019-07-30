@@ -59,5 +59,15 @@ public class UserCouponsController {
         return userCouponsService.queryUsedCoupons(userId);
     }
 
-
+    /**
+     * 使用用户指定的优惠券
+     *
+     * @param userCouponId 用户优惠券 id
+     * @return 使用的结果
+     */
+    @RequestMapping("/use-coupons/{userCouponId}")
+    public Response useCoupon(@PathVariable int userCouponId) {
+        log.info("UseCoupon: userCouponId {}", userCouponId);
+        return userCouponsService.useCoupon(userCouponId);
+    }
 }

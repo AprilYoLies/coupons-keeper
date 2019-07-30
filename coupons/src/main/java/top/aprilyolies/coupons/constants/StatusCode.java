@@ -15,7 +15,9 @@ public enum StatusCode {
     UPDATE_COUPON_STOCK_FAILED(6, "更新优惠券库存失败"),
     SAVE_USER_COUPONS_FAILED(7, "保存用户优惠券失败"),
     EMPTY_USER_COUPONS(8, "用户领取的优惠券为空"),
-    EMPTY_USED_COUPONS(9, "用户使用过的优惠券为空");
+    EMPTY_USED_COUPONS(9, "用户使用过的优惠券为空"),
+    COUPON_HAS_USED(10, "优惠券已经被使用过了"),
+    UPDATE_USER_COUPON_FAILED(11, "更新用户优惠券失败");
     // 状态码
     private int code;
     // 状态信息
