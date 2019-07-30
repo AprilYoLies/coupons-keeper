@@ -7,6 +7,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 import top.aprilyolies.coupons.constants.CouponsConstants;
 import top.aprilyolies.coupons.pojo.Coupon;
+import top.aprilyolies.coupons.pojo.Response;
 
 /**
  * @Author EvaJohnson
@@ -41,7 +42,7 @@ public class CouponsConsumer {
             log.error("Parse Coupon Error: {}", e.getMessage());
             return;
         }
-        int n = couponsService.saveCoupon(coupon);
-        log.info("Save coupon {} {}", couponStr, n > 0 ? "success" : "failed");
+        Response response = couponsService.saveCoupon(coupon);
+        log.info("ConsumeCoupons: {}", JSON.toJSONString(response));
     }
 }

@@ -7,6 +7,7 @@ package top.aprilyolies.coupons.service;
  */
 
 import top.aprilyolies.coupons.pojo.Coupon;
+import top.aprilyolies.coupons.pojo.Response;
 
 /**
  * 优惠券相关的服务
@@ -17,5 +18,5 @@ public interface ICouponsService {
      *
      * @param coupon
      */
-    int saveCoupon(Coupon coupon);
+    Response saveCoupon(Coupon coupon);
 }
