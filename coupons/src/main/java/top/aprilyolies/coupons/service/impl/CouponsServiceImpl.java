@@ -23,7 +23,7 @@ public class CouponsServiceImpl implements ICouponsService {
     }
 
     /**
-     * 将 coupon 保存到数据库
+     * 将 coupon 保存到数据库（不对重复优惠券进行验证）
      *
      * @param coupon 优惠券实例
      * @return 保存结果

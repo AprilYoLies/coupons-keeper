@@ -55,4 +55,13 @@ public interface UserCouponsMapper {
      * @return 影响的记录数
      */
     int updateUserCoupon(UserCoupon userCoupon);
+
+    /**
+     * 根据 userId 和 couponId 获取优惠券信息
+     *
+     * @param userId   用户 id
+     * @param couponId 优惠券 id
+     * @return 优惠券结果
+     */
+    UserCoupon findByUserIDAndCouponId(int userId, int couponId);
 }

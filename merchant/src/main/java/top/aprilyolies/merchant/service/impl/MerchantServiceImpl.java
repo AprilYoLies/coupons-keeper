@@ -3,6 +3,9 @@ package top.aprilyolies.merchant.service.impl;
 import com.alibaba.fastjson.JSON;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import top.aprilyolies.merchant.constants.StatusCode;
 import top.aprilyolies.merchant.mapper.MerchantMapper;
 import top.aprilyolies.merchant.pojo.Coupon;
@@ -37,6 +40,7 @@ public class MerchantServiceImpl implements IMerchantService {
      * @return 商户信息写入的结果
      */
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Response createMerchants(MerchantInfo merchantInfo) {
         Response response = new Response();
         StatusCode code = merchantInfo.validate(merchantMapper);

@@ -1,6 +1,7 @@
 package top.aprilyolies.coupons.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -111,9 +112,12 @@ public class MerchantController {
         }
 
         if (!CollectionUtils.isEmpty(tokens)) {
-            for (String token : tokens) {
-                redisTemplate.opsForSet().add(key, token);
-            }
+            redisTemplate.execute((RedisCallback<Object>) connection -> {
+                for (String token : tokens) {
+                    connection.sAdd(key.getBytes(), token.getBytes());
+                }
+                return null;
+            });
             return true;
         }
         return false;

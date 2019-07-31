@@ -13,7 +13,7 @@
     <!-- 根据 id 查询优惠券信息 -->
     <select id="findById" resultType="top.aprilyolies.coupons.pojo.Coupon" parameterType="int">
         select id, merchant_id as merchantId, title, summary, `desc`, `limit`, has_token as hasToken, background,
-        start, end from coupons where id = #{couponId}
+        start, end from coupons where id = #{couponId} for update
     </select>
 
     <!-- 更新优惠券信息 -->

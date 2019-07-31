@@ -30,6 +30,12 @@ public class MerchantInfo {
     // 是否通过审核
     private int idAudit = 0;
 
+    /**
+     * 验证商户信息
+     *
+     * @param merchantMapper 商户 mapper 接口
+     * @return 验证的结果
+     */
     public StatusCode validate(MerchantMapper merchantMapper) {
         MerchantInfo info = merchantMapper.findByName(name);
         if (info != null) {

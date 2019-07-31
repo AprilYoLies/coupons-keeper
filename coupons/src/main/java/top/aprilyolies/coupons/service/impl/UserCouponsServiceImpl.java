@@ -1,6 +1,8 @@
 package top.aprilyolies.coupons.service.impl;
 
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.aprilyolies.coupons.constants.StatusCode;
 import top.aprilyolies.coupons.mapper.CouponsMapper;
 import top.aprilyolies.coupons.mapper.UserCouponsMapper;
@@ -12,6 +14,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static top.aprilyolies.coupons.constants.CouponsConstants.TOKEN_PREFIX;
 
 /**
  * @Author EvaJohnson
@@ -26,10 +30,13 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
 
     private UserCouponsMapper userCouponsMapper;
 
-    public UserCouponsServiceImpl(UserMapper userMapper, CouponsMapper couponsMapper, UserCouponsMapper userCouponsMapper) {
+    private StringRedisTemplate redisTemplate;
+
+    public UserCouponsServiceImpl(UserMapper userMapper, CouponsMapper couponsMapper, UserCouponsMapper userCouponsMapper, StringRedisTemplate redisTemplate) {
         this.userMapper = userMapper;
         this.couponsMapper = couponsMapper;
         this.userCouponsMapper = userCouponsMapper;
+        this.redisTemplate = redisTemplate;
     }
 
     /**
@@ -40,6 +47,7 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
      * @return 领取优惠券的结果信息
      */
     @Override
+    @Transactional
     public Response gainCouponForUser(int userId, int couponId) {
         StatusCode code = checkUserExisted(userId);
         if (code != StatusCode.SUCCESS) {
@@ -58,14 +66,30 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
         userCoupon.setAssignDate(new Date());
         userCoupon.setCouponId(couponId);
         if (coupon.getHasToken()) {
-            // TODO 获取优惠券 Token，设置 Token 信息
+            String key = getTokenKey(userCoupon);
+            String token = redisTemplate.opsForSet().pop(key);
+            userCoupon.setToken(token);
         }
         userCoupon.setUserId(userId);
+        UserCoupon maybeNull = userCouponsMapper.findByUserIDAndCouponId(userCoupon.getUserId(), userCoupon.getCouponId());
+        if (maybeNull != null) {
+            return Response.buildResponse(StatusCode.REPEAT_GAIN_COUPON).setData(userCoupon);
+        }
         int c = userCouponsMapper.saveUserCoupon(userCoupon);
         if (c < 1) {
             return Response.buildResponse(StatusCode.SAVE_USER_COUPONS_FAILED).setData(-1);
         }
         return Response.buildResponse(StatusCode.SUCCESS).setData(userCoupon);
+    }
+
+    /**
+     * 获取当前优惠券对应的 redis 中的 token 集合 key 值，token-优惠券 id
+     *
+     * @param userCoupon 用户优惠券
+     * @return 当前优惠券对应的 redis 中的 token 集合 key 值
+     */
+    private String getTokenKey(UserCoupon userCoupon) {
+        return TOKEN_PREFIX + userCoupon.getCouponId();
     }
 
     /**
@@ -105,6 +129,7 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
      * @return 使用的结果
      */
     @Override
+    @Transactional
     public Response useCoupon(int userCouponId) {
         UserCoupon userCoupon = userCouponsMapper.findById(userCouponId);
         if (userCoupon == null) {
@@ -122,7 +147,7 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
     }
 
     /**
-     * 获取用户可领取的优惠券，不包括已领取优惠券和失效
+     * 获取用户可领取的优惠券，不包括已领取优惠券和失效优惠券（有效期没做判断）
      *
      * @param userId 用户 id
      * @return 可获取的优惠券信息

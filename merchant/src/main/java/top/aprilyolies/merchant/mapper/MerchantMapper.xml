@@ -14,7 +14,8 @@
     <select id="findByName" resultType="top.aprilyolies.merchant.pojo.MerchantInfo" parameterType="string">
         select id, name, logo_url as logoUrl, business_license_url as businessLicenseUrl, phone, address
         from merchants
-        where name = #{name}
+        where name = #{name} for
+        update
     </select>
 
     <!-- 根据 id 查询商户信息 -->
