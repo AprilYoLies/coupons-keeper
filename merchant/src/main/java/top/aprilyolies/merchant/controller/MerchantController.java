@@ -61,4 +61,14 @@ public class MerchantController {
         log.info("DropPassTemplate: {}", JSON.toJSONString(coupon));
         return merchantService.dropCoupon(coupon);
     }
+
+    /**
+     * 上传 token 的界面
+     *
+     * @return token 上传视图名
+     */
+    @RequestMapping("/upload")
+    public String upload() {
+        return "upload";
+    }
 }

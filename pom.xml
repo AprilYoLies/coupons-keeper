@@ -118,29 +118,4 @@
             <version>2.2</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <!--解决Intellij构建项目时，target/classes目录下不存在mapper.xml文件-->
-        <resources>
-            <resource>
-                <directory>${basedir}/src/main/java</directory>
-                <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-                <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-
-        </resources>
-    </build>
 </project>
