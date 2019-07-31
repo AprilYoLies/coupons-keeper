@@ -6,6 +6,7 @@ package top.aprilyolies.coupons.constants;
  * @Email g863821569@gmail.com
  */
 public enum StatusCode {
+    EXCEPTION(-1, "服务器内部异常"),
     SUCCESS(0, "成功"),
     CREATE_USER_FAILED(1, "创建用户失败"),
     SAVE_COUPON_FAILED(2, "保存优惠券失败"),

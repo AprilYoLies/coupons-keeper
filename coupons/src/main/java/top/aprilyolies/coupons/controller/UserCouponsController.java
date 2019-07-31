@@ -1,9 +1,7 @@
 package top.aprilyolies.coupons.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.aprilyolies.coupons.pojo.Response;
 import top.aprilyolies.coupons.service.IUserCouponsService;
 
@@ -81,5 +79,17 @@ public class UserCouponsController {
     public Response availableCoupons(@PathVariable int userId) {
         log.info("AvailableCoupons: userId {}", userId);
         return userCouponsService.availableCoupons(userId);
+    }
+
+    /**
+     * 全局异常测试
+     *
+     * @return 无返回
+     * @throws Exception
+     */
+    @ResponseBody
+    @GetMapping("/exception")
+    Response exception() throws Exception {
+        throw new Exception("全局异常处理测试异常");
     }
 }
