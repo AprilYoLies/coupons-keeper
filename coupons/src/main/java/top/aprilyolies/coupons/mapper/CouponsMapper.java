@@ -49,4 +49,11 @@ public interface CouponsMapper {
      * @return 符合条件的优惠券信息
      */
     List<Coupon> excludedFind(@Param("excludeIds") Set<Integer> excludeIds);
+
+    /**
+     * 获取全部的优惠券信息
+     *
+     * @return 全部的优惠券信息
+     */
+    List<Coupon> findAll();
 }
