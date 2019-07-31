@@ -39,4 +39,10 @@
             #{item}
         </foreach>
     </select>
+
+    <!-- 获取全部的优惠券信息 -->
+    <select id="findAll" parameterType="java.util.Set" resultType="top.aprilyolies.coupons.pojo.Coupon">
+        select id, merchant_id as merchantId, title, summary, `desc`, `limit`, has_token as hasToken, background,
+        start, end from coupons
+    </select>
 </mapper>

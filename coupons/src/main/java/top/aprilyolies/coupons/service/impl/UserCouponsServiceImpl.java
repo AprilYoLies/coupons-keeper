@@ -102,7 +102,7 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
     public Response queryUserCoupons(int userId) {
         List<UserCoupon> userCoupons = userCouponsMapper.findAllByUserId(userId);
         if (userCoupons == null || userCoupons.size() == 0) {
-            return Response.buildResponse(StatusCode.EMPTY_USER_COUPONS).setData(-1);
+            return Response.buildResponse(StatusCode.EMPTY_USER_COUPONS).setData(userCoupons);
         }
         return Response.buildResponse(StatusCode.SUCCESS).setData(userCoupons);
     }
@@ -163,7 +163,12 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
         for (UserCoupon coupon : coupons) {
             excludeIds.add(coupon.getCouponId());
         }
-        List<Coupon> availableCoupons = couponsMapper.excludedFind(excludeIds);
+        List<Coupon> availableCoupons;
+        if (excludeIds.isEmpty()) {
+            availableCoupons = couponsMapper.findAll();
+        } else {
+            availableCoupons = couponsMapper.excludedFind(excludeIds);
+        }
         if (availableCoupons == null || availableCoupons.size() == 0) {
             return Response.buildResponse(StatusCode.EMPTY_AVAILABLE_COUPONS).setData(userId);
         }
