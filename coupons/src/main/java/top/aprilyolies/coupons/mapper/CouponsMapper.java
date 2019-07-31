@@ -1,7 +1,11 @@
 package top.aprilyolies.coupons.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import top.aprilyolies.coupons.pojo.Coupon;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @Author EvaJohnson
@@ -37,4 +41,12 @@ public interface CouponsMapper {
      * @return 影响记录数
      */
     int updateCoupon(Coupon coupon);
+
+    /**
+     * 排除方式的查找，查询结果不包括参数集合中的内容
+     *
+     * @param excludeIds 被排除的项
+     * @return 符合条件的优惠券信息
+     */
+    List<Coupon> excludedFind(@Param("excludeIds") Set<Integer> excludeIds);
 }

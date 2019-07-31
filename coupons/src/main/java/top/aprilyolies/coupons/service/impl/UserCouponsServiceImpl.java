@@ -9,7 +9,9 @@ import top.aprilyolies.coupons.pojo.*;
 import top.aprilyolies.coupons.service.IUserCouponsService;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author EvaJohnson
@@ -116,7 +118,31 @@ public class UserCouponsServiceImpl implements IUserCouponsService {
         if (n < 1) {
             return Response.buildResponse(StatusCode.UPDATE_USER_COUPON_FAILED).setData(userCouponId);
         }
-        return Response.buildResponse(StatusCode.UPDATE_USER_COUPON_FAILED).setData(userCoupon);
+        return Response.buildResponse(StatusCode.SUCCESS).setData(userCoupon);
+    }
+
+    /**
+     * 获取用户可领取的优惠券，不包括已领取优惠券和失效
+     *
+     * @param userId 用户 id
+     * @return 可获取的优惠券信息
+     */
+    @Override
+    public Response availableCoupons(int userId) {
+        StatusCode code = checkUserExisted(userId);
+        if (code != StatusCode.SUCCESS) {
+            return Response.buildResponse(code).setData(-1);
+        }
+        @SuppressWarnings("unchecked") List<UserCoupon> coupons = (List<UserCoupon>) queryUserCoupons(userId).getData();
+        Set<Integer> excludeIds = new HashSet<>(coupons.size());
+        for (UserCoupon coupon : coupons) {
+            excludeIds.add(coupon.getCouponId());
+        }
+        List<Coupon> availableCoupons = couponsMapper.excludedFind(excludeIds);
+        if (availableCoupons == null || availableCoupons.size() == 0) {
+            return Response.buildResponse(StatusCode.EMPTY_AVAILABLE_COUPONS).setData(userId);
+        }
+        return Response.buildResponse(StatusCode.SUCCESS).setData(availableCoupons);
     }
 
     /**

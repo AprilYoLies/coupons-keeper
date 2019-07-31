@@ -44,4 +44,12 @@ public interface IUserCouponsService {
      * @return 使用的结果
      */
     Response useCoupon(int userCouponId);
+
+    /**
+     * 获取用户可领取的优惠券，不包括已领取优惠券和失效
+     *
+     * @param userId 用户 id
+     * @return 可获取的优惠券信息
+     */
+    Response availableCoupons(int userId);
 }

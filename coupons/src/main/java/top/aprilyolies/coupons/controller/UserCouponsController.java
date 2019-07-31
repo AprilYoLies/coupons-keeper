@@ -70,4 +70,16 @@ public class UserCouponsController {
         log.info("UseCoupon: userCouponId {}", userCouponId);
         return userCouponsService.useCoupon(userCouponId);
     }
+
+    /**
+     * 获取用户可领取的优惠券，不包括已领取优惠券和失效
+     *
+     * @param userId 用户 id
+     * @return 可获取的优惠券信息
+     */
+    @RequestMapping("/available-coupons/{userId}")
+    public Response availableCoupons(@PathVariable int userId) {
+        log.info("AvailableCoupons: userId {}", userId);
+        return userCouponsService.availableCoupons(userId);
+    }
 }

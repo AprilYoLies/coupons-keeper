@@ -17,7 +17,8 @@ public enum StatusCode {
     EMPTY_USER_COUPONS(8, "用户领取的优惠券为空"),
     EMPTY_USED_COUPONS(9, "用户使用过的优惠券为空"),
     COUPON_HAS_USED(10, "优惠券已经被使用过了"),
-    UPDATE_USER_COUPON_FAILED(11, "更新用户优惠券失败");
+    UPDATE_USER_COUPON_FAILED(11, "更新用户优惠券失败"),
+    EMPTY_AVAILABLE_COUPONS(12, "用户可领取的优惠券为空");
     // 状态码
     private int code;
     // 状态信息

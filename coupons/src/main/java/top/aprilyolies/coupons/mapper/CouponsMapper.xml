@@ -16,6 +16,7 @@
         start, end from coupons where id = #{couponId}
     </select>
 
+    <!-- 更新优惠券信息 -->
     <update id="updateCoupon" parameterType="top.aprilyolies.coupons.pojo.Coupon">
         update coupons set
         merchant_id = #{merchantId},
@@ -29,4 +30,13 @@
         end = #{end}
         where id = #{id}
     </update>
+
+    <!-- 排除方式的查找，查询结果不包括参数集合中的内容 -->
+    <select id="excludedFind" parameterType="java.util.Set" resultType="top.aprilyolies.coupons.pojo.Coupon">
+        select id, merchant_id as merchantId, title, summary, `desc`, `limit`, has_token as hasToken, background,
+        start, end from coupons where id not in
+        <foreach collection="excludeIds" index="idx" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
